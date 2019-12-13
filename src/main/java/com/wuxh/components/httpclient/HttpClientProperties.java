@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "spring.http.client")
 public class HttpClientProperties {
 
+    private String agent = "agent";
     /**
      * 获取连接超时时间
      */
@@ -33,6 +34,19 @@ public class HttpClientProperties {
      * 最大连接数
      */
     private int maxTotal = 50;
+
+    /***
+     * 连接状态检测
+     */
+    private boolean staleConnectionCheckEnabled;
+
+    public String getAgent() {
+        return agent;
+    }
+
+    public void setAgent(String agent) {
+        this.agent = agent;
+    }
 
     public int getConnectTimeout() {
         return connectTimeout;
@@ -64,5 +78,13 @@ public class HttpClientProperties {
 
     public void setMaxTotal(int maxTotal) {
         this.maxTotal = maxTotal;
+    }
+
+    public boolean isStaleConnectionCheckEnabled() {
+        return staleConnectionCheckEnabled;
+    }
+
+    public void setStaleConnectionCheckEnabled(boolean staleConnectionCheckEnabled) {
+        this.staleConnectionCheckEnabled = staleConnectionCheckEnabled;
     }
 }
