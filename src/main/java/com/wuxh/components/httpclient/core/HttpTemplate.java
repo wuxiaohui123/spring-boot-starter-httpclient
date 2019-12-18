@@ -13,6 +13,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.springframework.util.StringUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +55,26 @@ public class HttpTemplate {
         }
         httpGet.releaseConnection();
         return result;
+    }
+
+
+    /***
+     *  不带参数的get请求
+     * @param url 请求url
+     * @return 返回流
+     * @throws Exception
+     */
+    public InputStream doGetToStream(String url) throws Exception {
+        // 声明 http get 请求
+        HttpGet httpGet = new HttpGet(url);
+        // 发起请求
+        CloseableHttpResponse response = this.httpClient.execute(httpGet);
+        InputStream inputStream = null;
+        if (response.getStatusLine().getStatusCode() == 200) {
+            inputStream =  response.getEntity().getContent();
+        }
+        httpGet.releaseConnection();
+        return inputStream;
     }
 
     /**
