@@ -64,7 +64,7 @@ public class HttpTemplate {
      * @return 返回流
      * @throws Exception
      */
-    public InputStream doGetToStream(String url) throws Exception {
+    public HttpStreamResult doGetToStream(String url) throws Exception {
         // 声明 http get 请求
         HttpGet httpGet = new HttpGet(url);
         // 发起请求
@@ -73,8 +73,7 @@ public class HttpTemplate {
         if (response.getStatusLine().getStatusCode() == 200) {
             inputStream =  response.getEntity().getContent();
         }
-        httpGet.releaseConnection();
-        return inputStream;
+        return new HttpStreamResult().setIn(inputStream).setHttpRequest(httpGet);
     }
 
     /**
